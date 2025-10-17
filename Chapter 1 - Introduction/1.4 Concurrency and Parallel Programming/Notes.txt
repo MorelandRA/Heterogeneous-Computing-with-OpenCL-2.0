@@ -1,0 +1,9 @@
+Concurrency and parallel are not synonymous; though all parallel tasks are concurrent, alternating between two tasks
+is considered concurrent but not parallel. In this way, a single-threaded application can still be concurrent.
+
+Step 1: A = B + C
+Step 2: D = E + G
+Step 3: R = A + D
+
+Steps 1 and 2 can be executed in parallel because they don't depend on each other.
+Step 3 has to wait for Steps 1 and 2 to complete because it depends on their results.

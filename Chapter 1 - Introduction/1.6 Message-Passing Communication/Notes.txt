@@ -1,0 +1,2 @@
+Instead of shared memory, you could use a library like Message Passing Interface (MPI) to explicitly communicate
+between tasks, but MPI implementations differ and make it not very portable.

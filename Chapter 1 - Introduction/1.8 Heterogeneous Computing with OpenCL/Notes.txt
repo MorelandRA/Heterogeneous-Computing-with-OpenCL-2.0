@@ -1,0 +1,11 @@
+OpenCL is managed by nonprofit "the Khronos Group". Released in 2008. 2.0 was released in 2013.
+
+Features:
+    Nested Parallelism
+    Shared Virtual Memory
+    Pipe Memory Objects
+    C11 Atomics
+    Improved Images
+    Additional Features
+
+OpenCL is widely supported, across companies and device types.

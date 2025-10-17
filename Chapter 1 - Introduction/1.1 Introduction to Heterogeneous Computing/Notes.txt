@@ -1,0 +1,7 @@
+Heterogeneous Computing includes serial and parallel processing.
+
+Multiple devices on a computer means that tasks can be allocated to the best device available in parallel.
+
+Heterogeneous applications can improve a variety of tasks, including searching, sorting, parsing, image processing,
+simulation, modeling, data mining, iterative methods, numerical methods, financial modeling; no single device is best
+for all tasks, but heterogeneous computing allows tasks to be allocated to the right device.

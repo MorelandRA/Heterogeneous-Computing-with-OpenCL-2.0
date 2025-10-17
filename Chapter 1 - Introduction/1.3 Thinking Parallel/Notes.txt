@@ -1,0 +1,24 @@
+Most apps are first written to be serial.
+
+Approaches to parallelize work include Divide-And-Conquer and Scatter-Gather.
+
+Divide and Conquer break problems down into smaller problems until small enough to be solvable.
+
+Scatter Gather sends a subset of the data to each resource, then combines the results
+
+Engineers blame things like "The laws of thermodynamics" for not being able to increasingly make processors faster,
+so instead they put a bunch of processors on a single chip and make programmers deal with parallelizing their tasks.
+
+Kernels are "Compute-intensive and data-intensive portions of a given application [which] may be offloaded to the
+GPU ... while the host CPU continues to execute non-kernel tasks".
+
+Parallelism can be seen in lots of real-world domains, such as molecular dynamics, weather/ocean patterns, multimedia
+systems, assembly lines
+
+Parallel computing "is a form of computation in which many calculations are carried out simultaneously,
+operating on the principle that large problems can often be divided into smaller ones, which are then solved
+concurrently (i.e. in parallel)".
+
+"A task is a piece of work to be done or undertaken, sometimes used instead of the operating system term 'process'"
+
+See pages 4-6 for some examples and their associated diagrams.

@@ -1,0 +1,20 @@
+The grain is how much work is done by a thread. A larger grain = more work relative to the amount of interthread
+communication; also known as chunk size, and choosing your grain is referred to as chunking.
+
+Fine Grained with a Large Number of Tasks:
+    Compute intensity needs to be moderate so that each thread has a sufficient amount of work
+    Communication cost needs to be low
+    Workload scheduling is important (when you have more tasks than threads)
+
+Coarse-Grained:
+    Compute intensity will be higher
+    Larger work items have to be identified to be parallel by the programmer
+
+The most efficient granularity depends on the algorithm and the hardware, but generally, if the communication cost
+is high, it's better to have larger chunks.
+
+SIMD: Single Instruction, Multiple Data
+    Extremely fine grained (single instruction)
+    Requires a large vector (data set) to make up for communication time
+
+SPMD (Single Program, Multiple Data) takes the same idea but applies it to larger programs.

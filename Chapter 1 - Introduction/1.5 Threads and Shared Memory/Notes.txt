@@ -1,0 +1,5 @@
+A process can have subprocesses which can run concurrently, called threads.
+Threads share resources such as memory, open-files, and globals, but also have their own resources such as stack and
+automatic variables.
+Threads can communicate using globals, but this requires synchronization to ensure that multiple threads aren't
+changing the same memory location at the same time.

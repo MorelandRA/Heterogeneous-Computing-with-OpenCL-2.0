@@ -1,0 +1,13 @@
+Chapter 1: Concurrency, Threads, Grains; Fundamentals
+Chapter 2: Supported architectures, multicore and throughput-oriented systems, advances in heterogeneous architectures
+Chapter 3: Intro to OpenCL, Host API, OpenCL C, Programming your first OpenCL Application
+Chapter 4: Examples; Histogram, Image Rotation, Convolution. Pipe memory objects. The C++ wrapper
+Chapter 5: Concurrency and execution. Kernels, work items, exec and memory hierarchies, queuing, synchronization
+Chapter 6: Host-Side Memory Model; resource and memory management
+Chapter 7: Device-Side Memory Model; how to access data. Memory ordering, scope
+Chapter 8: OpenCL on 3 different platforms. Memory optimizations
+Chapter 9: Case study; image clustering, search
+Chapter 10: Profiling and Debugging with AMD CodeXL
+Chapter 11: C++Amp
+Chapter 12: WebCL; Access an OpenCL device from the browser
+Chapter 13: OpenCL in Java, Python, and Haskell

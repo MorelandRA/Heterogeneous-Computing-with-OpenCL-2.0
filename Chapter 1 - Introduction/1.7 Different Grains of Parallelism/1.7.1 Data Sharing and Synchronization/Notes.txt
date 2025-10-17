@@ -1,0 +1,3 @@
+Communication events, such as when one task depends on the output of another, or when intermediate results are being
+combined, make synchronization more challenging.
+Synchronization primitives such as barriers and locks can help, but are discussed in later chapters.

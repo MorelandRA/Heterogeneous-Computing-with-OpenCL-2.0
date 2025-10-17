@@ -1,0 +1,8 @@
+Goal is to teach parallel computing using OpenCL 2.0.
+
+Examples offer a simple intro with increasingly advanced applications and optimizations.
+
+Teaches to help profile and debug issues.
+
+Instructor slides / examples that are supposed to be at http://store.elsevier.com/9780128014141 appear to be missing :)
+    TODO: Need to see if these have been posted elsewhere

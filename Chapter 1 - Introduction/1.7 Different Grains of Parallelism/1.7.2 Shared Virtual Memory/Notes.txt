@@ -1,0 +1,8 @@
+OpenCL 2.0 supports a shared virtual memory, which basically means that two devices/kernels can point to the same
+memory address and act upon it, which prevents the need for multiple copies of a memory address, and enables pointer
+based structures like linked lists which were not previously supported by opencl.
+
+Coarse Grained Buffer Sharing: Updates entire buffers through API calls
+Fine-Grained Sharing: Leverages synchronization points
+
+These are elaborated on in chapters 6 and 7.
