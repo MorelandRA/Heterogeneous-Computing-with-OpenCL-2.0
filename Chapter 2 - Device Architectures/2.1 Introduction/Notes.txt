@@ -1,0 +1,5 @@
+clGetDeviceInfo lets you detect hardware capabilities
+
+OpenCL is designed to be platform independent, but algorithms are designed differently per company, so performance
+isn't platform-independent. OpenCL 2.0 has helped, but developers still need to the effects of hardware differences in
+order to make informed design decisions. It will also help to understand some of the design decisions in OpenCL.

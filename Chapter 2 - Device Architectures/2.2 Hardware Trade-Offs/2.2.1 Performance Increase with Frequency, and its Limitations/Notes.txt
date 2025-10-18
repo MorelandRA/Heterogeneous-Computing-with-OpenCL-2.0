@@ -1,0 +1,4 @@
+The easiest way to write code is to perform one task after another (serially) but it's harder to write parallel code.
+
+Performance increase with frequency is less-than-linear, which is why frequency improvements get increasingly harder
+to make. Therefore, to significantly improve compute times, we instead have to perform more operations at once.

@@ -1,0 +1,17 @@
+OpenCL originated for graphics APIs / pixel shaders
+
+What's a gpu and how does it differ from other devices?
+    How many cores does a GPU have to have?
+        What's a core?
+        What's a many-core device?
+        What's a multicore device?
+
+Multicore CPUs maintain the speeds of single-core CPUs with extra processing power and limited electrical power
+
+SIMD and Very Long Instruction Word (VLIW) improve work rates by improving the ratio of arithmetic operations vs
+control logic.
+
+Multithreading lets computing work happen while non-computing work is waiting.
+
+All approaches have trade-offs, but heterogeneity allows multiple approaches to be used and to get the best of all
+worlds.
