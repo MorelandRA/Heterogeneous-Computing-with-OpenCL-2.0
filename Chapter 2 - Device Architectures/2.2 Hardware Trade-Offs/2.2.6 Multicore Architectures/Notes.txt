@@ -1,0 +1,15 @@
+Basic concept is to have multiple CPU cores all interacting with the same memory system. This is an old technique
+and can massively increase performance.
+
+What is and isn't a core can be hard to define.
+
+Standard CPUs tend to have multiple execution components acting independently and in parallel, but this typically
+wouldn't be considered multicore.
+
+Higher end CPUs might have multiple cores sharing functional units.
+
+Similarly, GPUs can have lots of cores, on the scale of 32-64 ( as of writing the book; probably dated)
+Some designs follow an approach similar to multicore CPUs
+Others take a different approach, using many SIMD cores to execute ALU operations.
+Instruction scheduling, decode, and dispatch are handled by the wave scheduler units.
+    Wave schedules are named for the wide SIMD thread context called a Wavefront

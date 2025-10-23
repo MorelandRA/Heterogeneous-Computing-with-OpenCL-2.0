@@ -1,0 +1,21 @@
+Accessing data from memory is slow, but not random.
+It's more likely to access data that has locality:
+    Temporal: Data that has been read/written recently
+    Spacial: Data with a memory address that is close to data that has been read/written recently
+
+That's why we have caches; to store data that was accessed recently, along with the data that was near it, so that
+it can be accessed faster.
+
+
+CPU Caches:
+Multiple layers of caches are used in a hierarchy to move data as close to the CPU as possible, which allows it to be
+fast enough for out of order logic (superscalar execution) to cover the remaining access time (ideally, within as few
+clock cycles as possible) and also saves on power.
+
+Throughput Processors:
+More latency-tolerant, using threading to occupy the processors while waiting on data. The goal of cacheing here is
+to reduce traffic across limited memory buses. Wide SIMD units use this to increase the size of memory transaction
+requests, and making 2D accesses more efficient
+
+Some GPUs support scratchpad spaces, enabling faster performance at the same amount of power/area, but the
+programming becomes more complicated.

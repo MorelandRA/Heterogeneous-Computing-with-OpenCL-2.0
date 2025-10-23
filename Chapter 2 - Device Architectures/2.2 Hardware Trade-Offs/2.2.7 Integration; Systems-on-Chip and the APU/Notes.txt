@@ -1,0 +1,11 @@
+For embedded systems where it's important to use low power, systems-on-chip (SoCs) combine components, optimizing
+for the specific use case.
+
+SoCs allow:
+    combined elements = lower manufacturing costs
+    smaller physical space
+    combined elements = smaller distances = less power, easier data sharing, lower latency
+
+Cell phones combine the ARM instruction set architecture, a mobile GPU, memory controllers, and more onto one chip
+
+An Accelerated Processing Unit (APU) combines CPU and GPU onto one chip.
