@@ -1,0 +1,32 @@
+Superscalar is an older technique in x86 designs where the CPU tracks dependencies between instructions, and
+parallelizes them as much as possible.
+
+For example, with the instruction set (first arg is the destination):
+
+add a,b,c
+mul d,b,e
+mul f,a,e
+add a,d,g
+fmul h,a,f
+
+We see the following dependencies:
+
+add a,b,c  mul d,b,e
+    |   \----|
+    V        v
+mul f,a,e  add a,d,g
+    |------/
+    V
+fmul h,a,f
+
+If we have two integer ALUs and one float ALU we can schedule the work similarly:
+calculate add a,b,c and mul d,b,e in parallel on two Integer ALUs
+calculate mul f,a,e and add a,d,g in parallel on two Integer ALUs
+calculate fmul h,a,f on one Float ALU.
+
+The CPU handles this automatically, so the programmer doesn't have to worry about it, but the hardware requirements
+to make it possible take up more physical space on the CPU. Also, to further optimize this, speculative instruction
+processing is required, which also leads to some throwaway work. Therefore, improvements on out-of-order execution
+have had diminishing returns.
+
+Most high-end CPUs are superscalar, and many GPUs are capable of superscalar as well.

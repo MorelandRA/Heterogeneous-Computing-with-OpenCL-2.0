@@ -1,0 +1,14 @@
+Threads can be used to run different independent instruction streams at the same time.
+
+The difficult part is having an extra instruction stream and maintaining registers/cache between them.
+
+Simultaneous Multithreading:
+    Instructions between multiple threads are both executed when there is availability.
+
+    Diagram on page 23, but the idea is that when one instruction stream doesn't need an ALU, the other instruction
+    stream may use it. Leverages superscalar execution
+
+Temporal Multithreading:
+    Round-robin instruction processing. Scheduling is made easy and easily scaled with more threads.
+
+    Diagrams on pages 24 and 25

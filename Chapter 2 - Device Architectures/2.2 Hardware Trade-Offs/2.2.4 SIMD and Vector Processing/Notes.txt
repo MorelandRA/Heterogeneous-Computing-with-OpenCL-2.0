@@ -1,0 +1,13 @@
+SIMD (Single Instruction, Multiple Data) and vector parallelism allow instructions for data-parallel execution
+Each SIMD instruction is performed on multiple elements in parallel.
+Vector parallelization does this specifically across all elements of a vector
+    The book says that vector parallelization is a generalization of SIMD, but it seems more like SIMD is Vector
+    Parallelism generalized to not require data to be contiguous / in a vector.
+Vector generalization also supports gathered reads and scattered write operations to/from memory
+
+In the example, the diagram shows instructions being processed one at a time through the ALUs. I think the point is that
+we could run the same instructions across multiple values at once, so although it's sequential, you can use it on
+multiple datasets at once. This could be further improved by using superscalar.
+
+Lots of code isn't data parallel; loops tend to be particularly challenging. This can lead to underused ALUs,
+which means inefficiency

@@ -1,0 +1,35 @@
+This is a compiler-level optimization.
+
+VLIW is a long instruction word with multiple instructions that will all be executed in parallel.
+
+Using the example in 2.2.2:
+
+add a,b,c
+mul d,b,e
+mul f,a,e
+add a,d,g
+fmul h,a,f
+
+We see the following dependencies:
+
+add a,b,c  mul d,b,e
+    |   \----|
+    V        v
+mul f,a,e  add a,d,g
+    |------/
+    V
+fmul h,a,f
+
+
+(If I understand right, the idea is)
+Create a Very Long Instruction Word combining add a,b,c and mul d,b,e
+    Execute it on the two Integer ALUs in parallel
+Create a Very Long Instruction Word combining mul f,a,e and add a,d,g
+    Execute it on the two Integer ALUs in parallel
+Create a Very Long Instruction Word of fmul h,a,f and execute it on the Float ALU
+
+Efficiency is lost due to idle ALUs
+If due to inherent inability to parallelize the instructions, this is better than out-of-order execution because the
+runtime is the same and there is less required hardware.
+If due to compiler limitations, out-of-order execution can occupy ALUs more consistently and it becomes a tradeoff
+between runtime and hardware.
