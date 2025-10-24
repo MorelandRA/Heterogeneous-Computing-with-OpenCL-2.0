@@ -1,0 +1,7 @@
+Many architectures have unique designs and don't fit the exact design definitions mentioned in 2.2.
+The point being that the way we think about architectures can be overly simplistic, such as considering
+all CPUs to be serial, GPUs to be purely parallel, core count, thread count.
+Instead, there is a lot of variation in designs.
+
+This section discusses some real architectures and the design decisions around them, which gives insight on
+how algorithms will perform on them.

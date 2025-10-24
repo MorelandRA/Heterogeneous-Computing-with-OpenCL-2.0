@@ -1,0 +1,54 @@
+Most people program on CPUs, which leverage a variety of different forms of parallelism
+
+
+LOW-POWER CPUS
+--------------
+Very simple, in-order cores
+Minimizing power consumption is the main goal, performance comes second
+Often, floats are not supported and parallelism is not needed
+
+ARM was originally for desktops but the simplicity of the architecture made it viable for mobile/embedded
+Most variants are 3-7 pipeline stages
+Some are superscalar, multicore
+Some support 64/128-bit SIMD operations
+Some support doubles, cryptography instructions
+Mid-range ARMv8-A sacrifices power for performance, with a wider instruction issue and out-of-order pipelines
+
+Puma uses a slower clock cycle and are designed to avoid overhead in the data path, but have worse peak performance
+
+Atom previously used simultaneous multithreading (SMT) to make up for their slower in-order single-thread performance
+
+Broadly speaking, features are kept simple and clock cycles are low to keep power costs low.
+
+
+MAINSTREAM DESKTOP CPUS
+-----------------------
+Haswell Architecture is mainstream for Intel CPU cores, which provided support for more integer instructions.
+
+Intel added hardware multithreading which is true SMT, where cores can mix operations from threads within the same core
+Scheduling complexity is higher but core efficiency is higher
+
+AMD increases parallel thread execution by balancing core count and threads per core.
+Cores get their own integer ALUs, state, and scheduler.
+Pairs of cores share the fetch unit, float ALUs, and an L2 cache
+This pair is referred to as a module
+ALU pipelines support out-of-order execution
+Portions of the L2 cache can be turned off to save power
+
+In-core multithreading is minimal/nonexistent
+
+
+SERVER CPUS
+-----------
+Intel's Itanium architecture and successors aim to create a mainstream server processor using Very Long Instruction
+Word (VLIW) techniques. This includes a large number of registers (128 integer and 128 floats) and uses the VLIW
+approach EPIC, which are 128-bit 3-instruction bundles.
+
+The goal of EPIC is to handle parallelism in the compile stage rather than at runtime.
+Highly dependent on compiler capability. Architectural strategies to help with this include execution masks,
+dependence flags, prefetch instructions, speculative loads, and rotating register files.
+
+Latest Itanium architectures use SMT, and have independent frontend and backend execution
+
+In general, server chips aim to maximize parallelism at the cost of single-threaded performance, and relies on the
+compiler to identify instruction parallelism.
