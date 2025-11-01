@@ -1,0 +1,28 @@
+The specification is divided into four parts, which the next sections will elaborate on:
+
+Platform Model:
+    There is one host processor, which coordinates execution (sends out kernels)
+    There is one or more device processors, which execute OpenCL kernels
+
+    Example: a host x86 CPU with a GPU acting as an accelerator
+
+Execution Model:
+    Configuration of the environment, including how it's defined, how host and devices communicate, and the
+    concurrency model (How an algorithm is broken into work items / groups).
+
+    Example: host sets up a kernel for the GPU and sends commands
+
+Kernel Programming Model:
+    How the concurrency model is mapped to hardware
+
+    Example: GPU creates hardware threads, and maps them to units.
+
+Memory Model:
+    Defines object types and the memory hierarchy (independent of the memory architecture), as well as memory ordering
+    requirements and any shared virtual memory between host and devices.
+
+    Example: Programmer allocates abstract memory, which gets mapped to physical memory
+
+Chapter begins by describing the host API, by introducing OpenCL models and the associated API.
+Then, it is demonstrated by a vector addition program
+The program will then be used to demo the OpenCL C++ API, and will be compared to the CUDA implementation.

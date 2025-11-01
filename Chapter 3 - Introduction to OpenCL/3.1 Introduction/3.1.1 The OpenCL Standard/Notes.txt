@@ -1,0 +1,16 @@
+By Apple in collaboration with AMD, IBM, Qualcomm, Inte, and NVIDIA, submitted to the Khronos group.
+1.0 Released by Khronos Group in 2008.
+    Defined the API and the C Kernel Language
+1.1 and 1.2 enhanced OpenCL with OpenGL interoperability, additional image formats, synchronization events, and
+device partitioning
+2.0 in November 2013
+    Shared virtual memory, nested parallelism, and generic address spaces
+    Could simply development and improve portability performance
+Khronos Group manages competing interests across vendors, and keeps OpenCL portable
+
+OpenCL C is a restricted version of C99, with some extensions for parallelism.
+    Also includes some C11 features like atomics and synchronization
+
+    3rd party bindings exist for Java, C++, Python, and .NET
+
+    Some libraries for linear algebra and computer vision leverage OpenCL for performance

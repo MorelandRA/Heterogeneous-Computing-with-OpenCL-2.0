@@ -1,0 +1,1 @@
+OpenCL supports concurrency, using a syntax similar to C/C++. Chapter will begin by going over the OpenCL standard.
