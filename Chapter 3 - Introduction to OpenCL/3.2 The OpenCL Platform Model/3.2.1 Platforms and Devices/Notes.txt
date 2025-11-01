@@ -1,0 +1,51 @@
+clGetPlatformIDs()
+    Used to discover available OpenCL platforms on the system.
+
+    cl_int
+    clGetPlatformIDs(
+        cl_uint num_entries,
+        cl_platform_id *platforms,
+        cl_uint *num_platforms)
+
+    Calling it twice is more robust
+        -> First call:
+            num_entries = 0
+            *platforms = NULL
+            *num_platforms = an unsigned integer pointer
+        <- Pointer is populated with the available number of platforms
+        Then the programmer can allocate space to hold the platform IDs at *platforms
+        -> Second call:
+            num_entries = your desired number of platforms (up to the amount on the system)
+            *platforms = the allocated memory space for the platform IDs
+            *num_platforms = NULL
+             and the desired number of platforms *num_platforms
+        <- *platforms contains discovered platforms?
+
+    In other words, clGetPlatformIDs does two things:
+        1. sets any pointer in *num_platforms to point to the count of how many platforms there are
+        2. sets any memory in *platforms to be the first (num_entries > 0) platform IDs
+
+Next, we need to identify the available devices:
+
+clGetDeviceIDs()
+    Used to discover available OpenCL devices on a platform
+    Works similarly to clGetPlatformIDs()
+
+    cl_int
+    clGetDeviceIDs(
+        cl_platform_id platform.
+        cl_device_type device_type,
+        cl_uint num_entries,
+        cl_device_id *devices,
+        cl_uint *num_devices)
+
+    device_type is used to limit devices to a certain type:
+        CL_DEVICE_TYPE_GPU
+        CL_DEVICE_TYPE_CPU
+        CL_DEVICE_TYPE_ALL
+        and other options
+    this option should be the same for both calls to clGetDeviceIDs()
+
+
+clGetPlatformInfo() and clGetDeviceInfo() can be used to print information about platforms and devices including
+vendor, name, type, memory sizes, bus width, and more (shown on page 46).

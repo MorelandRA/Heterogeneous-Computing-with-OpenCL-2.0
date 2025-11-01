@@ -1,0 +1,13 @@
+Host connected to one or more OpenCL devices
+A device can have one or more compute units, which have one or more processing units
+    Processor -> Core(s) -> Thread(s)
+
+Platform Model API allows OpenCL applications to adapt to different hardware configurations and choose the best
+    device
+
+A platform is like a vendor-specific OpenCL runtime; if Company A'S platform is chosen, it probably can't communicate
+with Company B's GPU.
+    But this isn't always the case, and some AMD/Intel implementations can target each others x86 CPUs as devices
+
+Platform model defines a device as a group of multiple compute units, where each compute unit is functionally
+independent.
