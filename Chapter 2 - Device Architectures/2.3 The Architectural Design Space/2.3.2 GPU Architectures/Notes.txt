@@ -1,0 +1,51 @@
+Chapter 8 elaborates on OpenCL programming for high-end GPUs
+
+GPUs are highly multithreaded due to needing to handle highly-parallel graphical content like vertices and pixels.
+
+HANDHELD GPUS
+-------------
+Small mumber of shader cores, each executing a large number of individual threads
+GPU threading is handled by hardware rather than the OS
+Some embedded designs allowed for shared memory between the CPU and GPU, saving on copy time. Others use caches
+
+HIGH END AMD/NVIDIA
+-------------------
+(note that this was written in 2013, and high-end gpus are now around 10x better)
+
+Aiming for performance over power efficiency
+
+High bandwidth per pin and lots of pins for fastest memory transfer times
+Wide SIMD arrays maximize arithmetic throughput
+
+AMD Radeon R9 290X and NVIDIA GeForce GTX 780:
+    Both use a 16-wide SIMD
+    AMD uses 64 element vector while NVIDIA uses 32 element over two cycles
+    Multithreaded
+    AMD:
+        1 scalar core, 4 SIMD units
+        Each SIMD unit has up to 10 vector threads (wavefronts)
+        = 40 threads per core
+        = 1760 threads across the device
+        = 112640 individual work items
+        NVIDIA is similar
+        Actual output is limited by how much state each thread uses, and will be lower
+    Both use a language which acts as a stream of instructions to each lane of a SIMD
+        NVIDIA calls this Single Instruction, Multiple Thread (SIMT)
+        Also called "Single program, multiple data on SIMD"
+
+    Instruction level parallelism
+        AMD issues multiple instructions per cycle
+        NVIDIA can co-issue two threads at once over four execution pipelines
+        Older AMDs used VLIW, which is one of the largest differences between older and "newer" (2013) models
+        All designs are superscalar, allowing memory access and arithmetic operations from threads
+
+    Multi-core
+        AMD has 44 cores
+        NVIDIA has 12 substantially larger cores (12 vector units each)
+        Each core has a scratchpad (local memory)
+
+    AMD diagram on page 35
+    NVIDIA diagram on page 36
+
+GPUs don't focus on complex out-of-order or multi-issue pipelines, instead focusing on pure throughput and thread
+level parallelism.

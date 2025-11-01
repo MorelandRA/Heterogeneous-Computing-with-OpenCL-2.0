@@ -1,0 +1,22 @@
+SoCs (Systems-on-Chip) are being used for more high-performance applications
+Mostly combining CPUs and GPUs, but also video decoders, random number generators, and encryption circuits
+Offers power savings overall by moving these calculations to special chips rather than needing the GPU to do it
+
+AMD:
+    Low power, low-end: Beema and Mullins
+        Based on the Puma CPU, combined with a low-end GPU
+        Single die
+    Higher performance: Kaveri
+        Based on the Steamroller core and a higher performance GPU
+        Diagram on page 37
+
+Intel: i7
+    Based on 4 cores of the Haswell microarchitecture and an HD GPU
+    Full OpenCL/DirectX 11 Capabilities
+    Diagram on page 38
+
+APU allows transfer between CPU and GPU efficiently, solving a major GPU bottleneck
+More tightly integrated CPU-GPU algorithms can leverage this
+    Not practical for standard architectures
+Loses the high bandwidth memory of standard GPUs
+Advantage comes when calculations are bottlenecked by communication

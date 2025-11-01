@@ -1,0 +1,5 @@
+Chapter discussed:
+Different types of architecture that OpenCL may run on
+Tradeoffs between different architectures
+
+Chapter 8 will elaborate on how OpenCL maps to a specific architecture
