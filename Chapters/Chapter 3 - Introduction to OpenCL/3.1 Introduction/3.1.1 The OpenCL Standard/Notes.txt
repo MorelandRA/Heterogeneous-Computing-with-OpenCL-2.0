@@ -1,4 +1,3 @@
-By Apple in collaboration with AMD, IBM, Qualcomm, Inte, and NVIDIA, submitted to the Khronos group.
 1.0 Released by Khronos Group in 2008.
     Defined the API and the C Kernel Language
 1.1 and 1.2 enhanced OpenCL with OpenGL interoperability, additional image formats, synchronization events, and

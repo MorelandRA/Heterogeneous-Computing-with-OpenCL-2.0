@@ -17,7 +17,6 @@ clGetPlatformIDs()
         -> Second call:
             num_entries = your desired number of platforms (up to the amount on the system)
             *platforms = the allocated memory space for the platform IDs
-            *num_platforms = NULL
              and the desired number of platforms *num_platforms
         <- *platforms contains discovered platforms?
 
