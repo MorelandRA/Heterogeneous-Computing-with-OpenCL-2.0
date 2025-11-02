@@ -1,0 +1,47 @@
+A context is an abstract environment for coordinating kernel execution.
+Contexts handle:
+    Communication
+    memory
+    programs
+    kernels
+
+The function to create a context is:
+
+clCreateContext()
+    Creates a context, which communicates between the host and the devices
+
+    cl_context
+    clCreateContext (
+        const cl_context_properties *properties,
+        cl_uint num_devices,
+        const cl_device_id *devices,
+        void (CL_CALLBACK *pfn_notify)(
+            const char *errinfo,
+            const void private_info,
+            size_t cb,
+            void *user_data),
+        void *user_data,
+        cl_int *errcode_ret)
+
+    properties can restrict the scope of the context to a platform or other types of filers.
+        limiting the scope to a platform allows the programmer to provide context for multiple platforms, utilizing
+        all resources across a range of vendors at once.
+
+    devices is the list of devices that the programmer wants to use in the context
+
+    user callback (the 4th argument, the void function) can be used to gather error information during the context's
+        lifetime (device errors, device memory allocation errors, other runtime OpenCL errors).
+
+    user_data is just a pointer that I pass in, that user callback passes back. It's whatever I want it to be, and just
+        is a signal for what context caused the error. Even though OpenCL will pass this back when there's an error,
+        I should still keep a pointer to it so I can free its memory when I'm done with the context.
+
+clCreateContextFromType()
+    Same idea as clCreateContext, but doesnt require a device list; instead pulls all devices of a type
+    (CPUs, GPUs, All, etc)
+
+clGetContextInfo()
+    Can query for information about the context including the number of devices and the device IDs
+
+
+

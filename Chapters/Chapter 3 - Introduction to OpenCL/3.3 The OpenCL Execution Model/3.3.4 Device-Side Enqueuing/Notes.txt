@@ -1,0 +1,14 @@
+If the amount of work to be dispatched can't be determined statically by the host, such as in algorithms where
+each stage depends on the previous one, older versions of OpenCL would require the device to tell the host
+the information that it needed to approximate the size of the next kernel.
+
+However, OpenCL 2.0 supports device-side enqueuing
+
+Now, kernels (parent kernels) can enqueue other kernels (child kernels) into a device-side command-queue.
+These are processed asynchronously, but the parent isn't complete until the children are.
+
+Device-side command-queue is an out-of-order command-queue, and acts the same as the host's out-of-order queue.
+    Device-side commands use events to enforce dependencies
+    These events are only visible to the parent.
+
+Chapter 5 elaborates on device-side enqueuing 

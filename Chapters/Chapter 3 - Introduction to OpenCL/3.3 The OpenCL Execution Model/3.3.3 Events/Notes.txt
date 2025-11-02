@@ -1,0 +1,34 @@
+Events specify dependencies between commands
+
+All events have three parameters in common:
+    A pointer to a list of events which are dependencies for the current command (known as a wait list)
+    The number of events in the waitlist
+    A pointer to an event that represents the execution of the current command
+
+    Specifying dependencies for events is discussed in more detail in chapter 5
+
+Events also allow the programmer to query the status of a command at any time; the status is updated as the command
+is processed. Possible states are:
+    Queued: It's on the command-queue
+    Submitted: Out of the command-queue, submitted to the device
+    Ready: Ready for execution
+    Running: Execution has started
+    Ended: Execution is finished
+    Complete: Child commands have also finished
+
+    Child commands are related to device-side enqueuing and are discussed in the next section, section 3.3.4.
+
+    Status will be a negative value if the command was unsuccessful.
+        This command-queue and other command-queues in the context may no longer be available.
+            (A context may have multiple devices, therefore multiple command queues, since it's one per device)
+
+clGetEventInfo()
+    Queries an event's status
+
+clWaitForEvents()
+    Host must wait for all specified events to complete execution
+
+    cl_int
+    clWaitForEvents(
+        cl_uint num_events,
+        const cl_event *event_list)

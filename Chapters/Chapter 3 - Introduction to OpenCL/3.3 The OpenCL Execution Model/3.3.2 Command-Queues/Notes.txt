@@ -1,0 +1,46 @@
+Tasks are performed based on commands sent from the host to the device.
+Command actions include executing kernels, data transfers, and synchronization
+Devices can also send commands to themselves, which is discussed later in the chapter (3.3.4 Device-Side Enqueuing)
+
+A command-queue is how a host requests actions from the device.
+
+One command-queue is created per device, so that the host can send commands to multiple devices when multiple are
+present.
+
+clCreateCommandQueueWithProperties()
+    Creates a command-queue associated with a device.
+
+    cl_command_queue
+    clCreateCommandQueueWithProperties(
+        cl_context context,
+        cl_device_id device,
+        cl_command_queue_properties properties,
+        cl_int *errcode_ret)
+
+    properties is a bit field which can be used to enable profiling commands or allow out-of order execution commands
+        CL_QUEUE_PROFILING_ENABLE
+        CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE
+    These are discussed in Chapter 5
+
+In-order command-queues pull commands from the queue in the order that they are received.
+    Kernels are parallel but commands are serial
+
+Out-of-order command-queues allow OpenCL to search for commands tht can be rearranged to execute more efficiently,
+but the programmer has to handle synchronization so that the correct execution order is enforced.
+    Kernels and commands are both parallel, up to the point of programmer-defined synchronization
+
+API calls that issue commands to the command-queue start with "clEnqueue" and are passed a command-queue
+
+    clEnqueueNDRangeKernel()
+        requests that a kernel is executed on the device
+
+    clEnqueueReadBuffer()
+        requests the device to send data to the host
+
+    These commands are discussed in detail later on (Sections 3.4.2 and 3.5.2 respectively)
+
+Barrier functions can be usd to synchronize execution
+    cl_int clFlush(cl_command_queue command_queue)
+        Waits until all commands have been started (but not necessarily finished executing)
+    cl_int clFinish(cl_command_queue command_queue)
+        Waits until all commands in the queue have been executed

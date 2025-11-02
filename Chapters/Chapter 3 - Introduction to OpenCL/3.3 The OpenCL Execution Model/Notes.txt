@@ -1,0 +1,2 @@
+The platform model allows us to view the platforms and devices on our system which can be targeted by OpenCL,
+but in order to send kernels (commands and data), a context must be configured.
