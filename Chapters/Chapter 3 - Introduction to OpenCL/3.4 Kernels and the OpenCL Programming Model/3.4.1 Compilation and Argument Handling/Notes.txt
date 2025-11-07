@@ -1,0 +1,37 @@
+An OpenCL program is a collection of:
+- OpenCL C kernels
+- functions called by the kernel
+- constant data
+
+OpenCL code is compiled at runtime, so the system can optimize the kernels for the specific device that it's running on
+
+Process for creating a kernel from source code:
+1. OpenCL C source code is stored in a character array
+    if the source is stored in a file on a disk, it first has to be read to memory
+2. Source is turned into a program object cl_program with clCreateProgramWithSource()
+3. The program is compiled for 1+ devices with clBuildProgram().
+    If there are compile errors, this is when they will be reported
+4. Kernel object cl_kernel is created with clCreateKernel()
+    clCreateKernel requires the program object and a name for the kernel
+
+    cl_kernel
+    clCreateKernel(
+        cl_program program,
+        const char *kernel_name,
+        cl_int *errcode_ret)
+
+Vendors will use clBuildProgram() to generate vendor-specific instruction sets.
+
+clGetProgramInfo() will return information about program objects.
+    using the CL_PROGRAM_BINARIES flag will return the vendor-specific generated binary.
+
+clCreateProgramWithBinary() can then be used to distribute OpenCL programs without sharing plain text kernel source code
+
+Kernel arguments can not be passed all at once. Instead, we have to pass the arguments one at a time:
+
+cl_int
+clSetKernelArg (
+    cl_kernel kernel //the kernel which we are passing an argument to
+    cl_uint arg_index //the index of the kernel's parameter which we are passing an argument to
+    size_t arg_size //the size of the object we are passing as an argument
+    const void *arg_value) //the object we are passing as an argument

@@ -1,0 +1,51 @@
+When writing multithreaded code for CPUs using OS threading APIs, the programmer has to consider the physical resources
+available, creating threads, and switching between those threads when there are more threads than cores.
+
+With OpenCL, the programmer focuses on programming parallelism at the smallest level of tasks possible. OpenCL
+allows this to be effective on a wide range of hardware.
+
+Below are three versions of a function which performs element-wise vector addition
+
+Serial:
+    Loops through every index (single-threaded) and calculates the element sums
+
+    void vectorAdd(int *sum, int *addend1, int *addend2, int arrSize){
+        for(int i = 0; i < arrSize; ++i){
+            sum[i] = addend2[i] + addend2[i];
+        }
+    }
+
+Coarse Grained Multithreaded:
+    Chunk your array based on how many processing threads are available into a large granularity (called strip mining)
+
+    The below code is what the book says, but I'm fairly sure that it misses elements when arrSize%totalThreadCount != 0
+
+    void vectorAdd(int *sum, int *addend1, int *addend2, int arrSize, int totalThreadCount, int threadID){
+        int elementsPerThread = arrSize/totalThreadCount;
+
+        for(int i = threadID*elementsPerThread; i < (threadID+1)*elementsPerThread); ++i){
+            sum[i] = addend2[i] + addend2[i];
+        }
+    }
+
+Fine Grained Multithreaded:
+    This example writes a proper OpenCL kernel
+    Each element will map to a work item, and the runtime will map those work items to the hardware (CPU or GPU cores)
+    Similar to a Map function, or any other data-parallel for-loop
+    get_global_id(0) is an intrinsic function which allows work items to have IDs.
+        0 represents the 1st dimension, which in this case is our only dimension
+
+    __kernel
+    void vectorAdd(__global int *sum, int *addend1, int *addend2){
+        int threadID = get_global_id(0);
+        sum[threadID] = addend1[threadID] + addend2[threadID];j
+    }
+
+Groups of work items are divided into "work groups", which can be a custom size up to the hardware limit
+
+Larger work groups can share data more easily and are scheduled more easily, but are less flexible, have to share
+memory space when allocating registers, and have more synchronization overhead. Small work groups also risk not
+filling the wavefront.
+
+For programs such as the example above, where work items are independent even within work groups (no communication, no
+branching), OpenCL can automatically determine a work group size if the developer passes NULL.
