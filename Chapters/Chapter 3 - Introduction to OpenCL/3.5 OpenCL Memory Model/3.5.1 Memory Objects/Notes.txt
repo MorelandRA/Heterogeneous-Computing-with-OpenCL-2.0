@@ -1,0 +1,64 @@
+Kernels normally need some input data, and generate some output data.
+Input data needs to be accessible by the device, and output data needs to be accessible by the host.
+Memory objects allow this data to be transferred between the two
+There are three types of memory objects: buffers, images, and pipes
+
+BUFFERS
+-------
+Equivalent to arrays
+
+clCreateBuffer()
+    allocates space for the buffer, returns a memory object
+
+    cl_mem
+    clCreateBuffer(
+        cl_context context, //visible for all devices associated with the context
+        cl_mem_flags flags, //read-only, write-only, or read-write, etc
+        size_t size, //size of the buffer
+        void *host_ptr, //optional based on the flag; allows allocating, copying, or directly using host memory
+        cl_int *errcode_ret //error response
+    )
+
+
+IMAGES
+------
+Abstracts image data to allow for device-specific optimizations
+Images can not be directly referenced like arrays can
+Not guaranteed to be stored contiguously
+
+clCreateImage()
+    allocates space for the image, returns a memory object
+
+    cl_mem
+    clCreateImage(
+        cl_context context, //visible for all devices associated with the context
+        cl_mem_flags flags, //read-only, write-only, or read-write, etc
+        const cl_image_format *image_format, //How the image is stored in memory
+        const cl_image_desc *image_desc, //Metadata such as type, size, etc
+        void *host_ptr, //optional based on the flag; allows allocating, copying, or directly using host memory
+        cl_int *errcode_ret //error response
+    )
+
+Example is in chapter 4
+Architectural design and tradeoffs in chapters 6 and 7
+
+
+PIPES
+-----
+A queue, where max-one kernel can read from, and max-one kernel can write to. These can not be the same kernel.
+Accessed using OpenCL's intrinsic read_pipe() and write_pipe() functions
+
+clCreatePipe()
+    allocates space for the pipe, returns a memory object
+
+    cl_mem
+    clCreatePipe(
+        cl_context context, //visible for all devices associated with the context
+        cl_mem_flags flags, //read-only, write-only, or read-write, etc
+        cl_uint pipe_packet_size, //size of a packet, or a single item in the queue
+        cl_uint max_packets, //max number of packets, or the max size of the queue
+        const cl_pipe_properties *properties, //Does nothing, reserved for future use/extensibility. Pass NULL
+        cl_int *errcode_ret //error response
+    )
+
+Pipes are described in more detail in Chapter 6

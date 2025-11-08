@@ -1,0 +1,9 @@
+Since architectures can vary widely in how they manage memory, OpenCL abstracts the memory model for programmers,
+and vendors map this abstract memory model to their architecture's actual memory model.
+
+With the abstract memory model, OpenCL can provide expectations for programmers:
+    order of memory operations
+    which memory values each read operation will return
+
+Chapters 6 and 7 elaborate on the OpenCL memory model
+This section focuses on the basics; OpenCL's memory object types, and regions of OpenCL's abstract memory model

@@ -1,0 +1,7 @@
+Address space can point to and from private, local, and global addresses, allowing arguments to come from any
+of these places.
+
+This allows for usuable generic functions, which can perform operations on memory regardless of the location of that
+memory.
+
+This is discussed further in chapter 7.

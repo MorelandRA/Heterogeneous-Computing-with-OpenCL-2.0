@@ -1,0 +1,24 @@
+Kernels often depend on some host data, which can be initialized in the clCreate call
+The memory object allows the runtime to worry about data transfer so we don't have to.
+
+However, sometimes we will want to manually trigger data transfers. These are also required to send data back to the
+host.
+
+Assuming we're using a buffer, we would use the calls clEnqueueReadBuffer() and clEnqueueWriteBuffer() calls.
+
+cl_int
+clEnqueueWriteBuffer(
+    cl_command_queue command_queue, //The command queue which this Write command will be placed on
+    cl_mem buffer, //The memory buffer which we are writing to
+    cl_bool blocking_write, //if this Write call should wait to return until the write is complete
+    size_t offset, //offset of where in the buffer to start writing
+    size_t cb, //amount of data to be transferred (count of bytes)
+    const void *ptr, //ptr to the host data to copy
+    cl_uint num_events_in_wait_list, //number of events which need to be completed before this write should begin
+    const cl_event *event_wait_list, //the list of events which must be completed before the write should begin
+    cl_event *event //The event representing this write
+)
+
+calls for read, as well as pipes and images, are similar to the one above.
+
+Writing to and reading from buffers is used in the vector addition at the end of the chapter.

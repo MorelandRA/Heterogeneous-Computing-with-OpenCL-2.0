@@ -1,0 +1,28 @@
+Memory is either Host Memory or Device Memory.
+
+Host memory is memory that is directly available to the host, and is defined outside of OpenCL, such as by malloc
+
+Device memory is divided into four different regions:
+    Global Memory:
+        Visible to all work items executing a kernel
+        Data transferred between the host and device is global
+    Constant Memory:
+        Like global where anything can read it including the host
+        All work-items may read it simultaneously because it is a constant value; no race conditions
+        Uses the keyword "constant" or "__constant"
+    Local Memory:
+        Shared between work items in a work group
+        Normally mapped to on-chip memory (but, it's up to the vendor)
+        Scratchpad memory
+        Much shorter latency / higher bandwidth than global memory
+        clSetKernelArg() with a size but no arg allows the host to allocate local memory at runtime
+        "local" or "__local" keywords can define local memory from within a kernel
+        Arrays can also be generated like this but the size must be statically declared at compile time
+    Private Memory:
+        Unique to an individual work-item
+        Local variables and nonpointer kernel args are private by default
+        Normally mapped to registers
+            Private arrays and spilled registers are mapped to long-latency memory (off-chip)
+
+Diagrams 3.6 and 3.7 on pages 61 and 62 give a visual for some of these concepts
+
