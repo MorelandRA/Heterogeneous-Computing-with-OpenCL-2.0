@@ -1,0 +1,19 @@
+clEnqueueNDRangeKernel()
+    enqueue an N-Dimensional kernel to your command queue
+    returns back as soon as the kernel is on the command queue, likely before execution has begun
+
+    cl_int
+    clEnqueueNDRangeKernel(
+        cl_command_queue command_queue, //Specifies the target device
+        cl_kernel kernel, //The code to be executed
+        cl_uint work_dim, //number of dimensions for work items (limited to 1, 2, or 3)
+        const size_t *global_work_offset, //offset so that work item IDs don't start at 0
+        const size_t *local_work_size, //num of work items per dimension
+        cl_uint num_events_in_wait_List, //number of items in the wait list
+        const cl_event *event_wait_list, //prereq items before this event can run
+        cl_event *event //current status of the kernel
+    )
+
+See section 3.3.3 for more details on events and the wait list
+
+clWaitForEvents() or clFinish can be used to make the host wait for kernels to complete.
