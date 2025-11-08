@@ -2,7 +2,7 @@ Events specify dependencies between commands
 
 All events have three parameters in common:
     A pointer to a list of events which are dependencies for the current command (known as a wait list)
-    The number of events in the waitlist
+    The number of events in the wait list
     A pointer to an event that represents the execution of the current command
 
     Specifying dependencies for events is discussed in more detail in chapter 5
