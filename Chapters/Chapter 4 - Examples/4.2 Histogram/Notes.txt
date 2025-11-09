@@ -1,0 +1,139 @@
+In this example we will create a histogram of the frequency of pixel values within a 256-bit image
+
+The example will demonstrate local memory, and local and global atomic operations, as well as barriers and memory
+fences.
+
+When each value corresponds with a bin, histograms are conceptually simple.
+
+    int histogram[HIST_BINS];
+
+    main() {
+        for(each input value){
+            histogram[value]++;
+        }
+    }
+
+However histograms aren't embarrassingly parallel, so the above code won't work as a kernel.
+Since all cores would be trying to increment values of histogram, there is a race condition.
+
+A simple fix to this would be to make the increment function atomic:
+
+    int histogram[HIST_BINS];
+
+    createHistogram(){
+        for(each of my values){
+            atomic_add(histogram[value], 1);
+        }
+    }
+
+    main() {
+        for(number of threads){
+            spawn_thread(createHistogram);
+        }
+    }
+
+but this is slow because every update is atomic. Atomic operations are slow even when there isnt contention.
+It's more efficient to have each thread create a local histogram, then add its totals to the global histogram.
+
+    int histogram[HIST_BINS];
+
+    createHistogram(){
+        int localHistogram[HIST_BINS];
+
+        for(each of my values){
+            localHistogram[value]++;
+        }
+
+        for(each bin){
+            atomic_add(histogram[bin], localHistogram[bin]);
+        }
+    }
+
+    main(){
+        for(number of threads){
+            spawn_thread(createHistogram);
+        }
+    }
+
+The above would be effective for a multithreaded CPU.
+
+Parallelizing an algorithm for OpenCL is similar to parallelizing an algorithm for a multithreaded CPU, except
+the granularity may be different. However, this many increments on the global histogram would be inefficient.
+Global memory accesses on GPUs are slow, and the large number of atomic operations would make it even slower.
+We also do not want to create a local copy of the histogram per work-item because it will use up too many registers,
+and spilled registers go to global memory, which would be even slower still.
+
+Then, the best approach is to have a histogram per work-group, which all work-items in that group can share. This
+local histogram is typically mapped to on-chip memory, which is much faster than global.
+
+Then we could use an algorithm similar to the second one above, which creates a local histogram, then writes it to
+the global histogram. However, since all of the work items in local memory are accessing the same local histogram,
+there is now a local race condition.
+
+On many GPUs, atomic accesses to local memory are efficient. AMD Radeon GPUs have atomic units built into the on-chip
+scratchpad storage. The below kernel example leverages this speed to generate local histograms:
+
+    #define HIST_BINS 256
+
+    __kernel
+    void histogram(__global int *data,
+                            int  numData,
+                   __global int *histogram){
+        __local int localHistogram[HIST_BINS];
+        int lid = get_local_id(0);
+        int gid = get_global_id(0);
+
+        // Initialize local histogram to zero
+        for (int i = lid; i < HIST_BINS; i += get_local_size(0)){
+            localHistogram[i] = 0;
+        }
+
+        //Wait until all work-items within the work-group have completed their stores
+        barrier(CLK_LOCAL_MEM_FENCE);
+
+        //Compute local histogram
+        for(int i = gid; i < numData; i += get_global_size(0)){
+            atomic_add(&localHistogram[data[i]], 1);
+        }
+
+        //Wait until all work-items within the work-group have completed their stores
+        barrier(CLK_LOCAL_MEM_FENCE);
+
+        //Write the local histogram out to the global histogram
+        for(int i = lid; i < HIST_BINS; i += get_local_size(0)){
+            atomic_add(&histogram[i], localHistogram[i]);
+        }
+    }
+
+The above implementation takes the following steps:
+1. Initialize the local histogram bins to zero
+2. Synchronize
+3. Compute the local histogram
+4. Synchronize
+5. Write the local histogram out to global memory
+
+The implementation of steps 1, 3, and 5 demonstrate a common pattern for reading/writing data to/from a shared location:
+When we need each location to be accessed only by a single work-item, begin with the work-item's ID and step by
+the size of the total number of work-items (locally, the work-group size, or globally, the NDRange).
+This allows the implementation to balance work between the work-items even if the work-group size changes.
+
+Barriers are elaborated on in Chapter 7, but for now it's sufficient to know that all work-items must reach the
+barrier before any can continue. Specifically, this local fence ensures that the memory changes are visible to
+the entire work-group before they proceed.
+
+The global histogram also needs to be set to zero before any local histograms are added to it. This can be done with:
+
+    cl_int
+    clEnqueueFillBuffer(
+        cl_command_queue command_queue,
+        cl_mem buffer, //The memory to be initialized
+        const void *pattern, //Data to be repeated into the buffer
+        size_t pattern_size, //Length of the repeating pattern
+        size_t offset, //Where to start within the buffer
+        size_t size, //Size of the buffer
+        cl_uint num_events_in_wait_list, //num of events that need to occur before this happens
+        const cl_event *event_wait_list, //list of the prereq events
+        cl_event *event //this event
+    )
+
+The book provides source code at https://booksite.elsevier.com/9780128014141/online_materials.php
