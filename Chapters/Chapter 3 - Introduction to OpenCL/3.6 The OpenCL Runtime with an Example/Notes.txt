@@ -1,0 +1,23 @@
+OpenCL's platform models (Sections 3.2-3.5) are exposed to programmers by their APIs
+    Platform Model: enables a host and 1+ devices to execute an OpenCL application
+    Programming Model: OpenCL kernels defined by the programmer
+    Memory Model: How a kernel manipulates data
+    Execution Model: allows issuing of commands to devices
+
+This section combines all of those concepts into an example, following these steps:
+
+1. Discover the platform and devices
+2. Create a context
+3. Create a command-queue per device
+4. Creating memory objects to hold data
+5. Copy input data to a device
+6. Create and compile a program
+7. Extract the kernel from the program
+8. Execute the kernel
+9. Copy output data to the host
+10. Release resources
+
+Much of the OpenCL setup code is generic and reusable.
+
+This section includes a lot of source code an explanation, but I will include these notes as comments in 3.6.1 with the
+full vector addition example.
