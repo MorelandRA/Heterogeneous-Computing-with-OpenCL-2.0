@@ -1,0 +1,2 @@
+Chapter covered the basics of OpenCL, as well as the different OpenCL abstraction models, and
+a basic OpenCL program example.

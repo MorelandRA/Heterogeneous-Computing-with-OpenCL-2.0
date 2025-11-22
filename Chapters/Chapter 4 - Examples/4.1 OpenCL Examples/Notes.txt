@@ -1,0 +1,23 @@
+This chapter goes over some basic OpenCL examples
+This will summarize Chapter 3 and demonstrate what is needed to write complete OpenCL applications.
+
+Later chapters will use this chapter as a reference for further optimization.
+
+Focuses of each example:
+    Histogram
+        Local Memory
+        Local Atomics
+        Global Atomics
+        Barriers
+        Memory Fences
+    Image Rotation:
+        Images
+        Samplers
+    Image Convolution
+        C++ API
+        Constant Memory
+        Images
+        Samplers
+    Producer-Consumer
+        Pipes
+        Multiple Devices
