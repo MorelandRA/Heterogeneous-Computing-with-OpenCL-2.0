@@ -19,5 +19,5 @@ This section combines all of those concepts into an example, following these ste
 
 Much of the OpenCL setup code is generic and reusable.
 
-This section includes a lot of source code an explanation, but I will include these notes as comments in 3.6.1 with the
+This section includes a lot of source code and explanation, but I will include these notes as comments in 3.6.1 with the
 full vector addition example.
