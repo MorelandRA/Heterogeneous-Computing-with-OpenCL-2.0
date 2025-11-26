@@ -1,2 +1,92 @@
 Chapter covered the basics of OpenCL, as well as the different OpenCL abstraction models, and
 a basic OpenCL program example.
+
+A platform is a vendor OpenCL representation
+A device is a hardware component. You can have multiple devices per platform.
+A context communicates between the host and the devices. You generally want one context per platform.
+
+
+API REFERENCE
+-------------
+
+cl_int clGetPlatformIDs
+(
+    0,
+    NULL,
+    cl_uint* num_platforms
+)
+sets num_platforms to the number of discovered platforms
+returns status code
+
+cl_int clGetPlatformIDs
+(
+    cl_uint num_entries,
+    cl_platform_id* platforms,
+    0
+)
+sets platforms to the first num_entries platforms
+returns status code
+
+
+cl_int clGetPlatformInfo
+(
+    cl_platform_id platform,
+    cl_platform_info param_name,
+    0,
+    NULL,
+    size_t* param_value_size_ret
+)
+sets param_value_size_ret to the size needed to store param_name
+returns status code
+
+cl_int clGetPlatformInfo
+(
+    cl_platform_id platform,
+    cl_platform_info param_name,
+    size_t param_value_size,
+    void* param_value,
+    NULL
+)
+sets param_value to the value of param_name
+returns status code
+
+
+cl_int clGetDeviceIDs
+(
+    cl_platform_id platform,
+    cl_device_type device_type,
+    0,
+    NULL,
+    cl_uint* num_devices
+)
+sets num_devices to the number of discovered devices on the platform of type device_type
+returns status code
+
+cl_int clGetDeviceIDs
+(
+    cl_platform_id platform,
+    cl_device_type device_type,
+    cl_uint num_entries,
+    cl_device_id* devices,
+    0
+)
+sets devices to the first num_entries devices on the platform of type device_type
+returns status code
+
+
+cl_context clCreateContext
+(
+    const cl_context_properties *properties,
+    cl_uint num_devices,
+    const cl_device_id *devices,
+    void (CL_CALLBACK *pfn_notify)
+    (
+        const char *errinfo,
+        const void private_info,
+        size_t cb,
+        void *user_data
+    ),
+    void *user_data,
+    cl_int *errcode_ret
+)
+returns a cl_context which can communicate with the devices.

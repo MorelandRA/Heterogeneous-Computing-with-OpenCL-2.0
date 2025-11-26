@@ -19,7 +19,7 @@ clGetPlatformIDs()
             *platforms = the allocated memory space for the platform IDs
             *num_platforms = an unsigned integer pointer (ignored)
              and the desired number of platforms *num_platforms
-        <- *platforms contains discovered platforms?
+        <- *platforms contains discovered platforms
 
     In other words, clGetPlatformIDs does two things:
         1. sets any pointer in *num_platforms to point to the count of how many platforms there are
@@ -33,7 +33,7 @@ clGetDeviceIDs()
 
     cl_int
     clGetDeviceIDs(
-        cl_platform_id platform.
+        cl_platform_id platform,
         cl_device_type device_type,
         cl_uint num_entries,
         cl_device_id *devices,
