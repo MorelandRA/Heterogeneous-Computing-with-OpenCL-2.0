@@ -81,12 +81,32 @@ cl_context clCreateContext
     const cl_device_id *devices,
     void (CL_CALLBACK *pfn_notify)
     (
-        const char *errinfo,
-        const void private_info,
+        const char* errinfo,
+        const void* private_info,
         size_t cb,
-        void *user_data
+        void* user_data
     ),
-    void *user_data,
-    cl_int *errcode_ret
+    void* user_data,
+    cl_int* errcode_ret
 )
 returns a cl_context which can communicate with the devices.
+
+
+cl_context clCreateContextFromType
+(
+    const cl_context_properties* properties,
+    cl_device_type device_type,
+    void (CL_CALLBACK* pfn_notify)
+    (
+        const char* errinfo,
+        const void* private_info,
+        size_t cb,
+        void* user_data
+    ),
+    void* user_data,
+    cl_int* errcode_ret
+)
+uses the platform of the first matching device, or defined in the properties
+returns a cl_context which can communicate with the devices
+
+
