@@ -110,3 +110,27 @@ uses the platform of the first matching device, or defined in the properties
 returns a cl_context which can communicate with the devices
 
 
+cl_int clGetContextInfo
+(
+    cl_context context,
+    cl_context_info param_name,
+    0,
+    NULL,
+    size_t* param_value_size_ret
+)
+sets param_value_size_ret to the size of param_name's response
+this is unnecessary if the queried parameter is a fixed size (such as CL_CONTEXT_NUM_DEVICES)
+returns status code
+
+cl_int clGetContextInfo
+(
+    cl_context context,
+    cl_context_info param_name,
+    size_t param_value_size,
+    void* param_value,
+    NULL
+)
+sets param_value to the queried param_name data
+returns status code
+
+
