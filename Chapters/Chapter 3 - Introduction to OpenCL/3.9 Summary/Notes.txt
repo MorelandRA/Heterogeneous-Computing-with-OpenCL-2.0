@@ -37,6 +37,7 @@ cl_int clGetPlatformInfo
     size_t* param_value_size_ret
 )
 sets param_value_size_ret to the size needed to store param_name
+this is unnecessary if the queried parameter is a fixed size (such as CL_PLATFORM_NUMERIC_VERSION)
 returns status code
 
 cl_int clGetPlatformInfo
@@ -76,10 +77,10 @@ returns status code
 
 cl_context clCreateContext
 (
-    const cl_context_properties *properties,
+    const cl_context_properties* properties,
     cl_uint num_devices,
-    const cl_device_id *devices,
-    void (CL_CALLBACK *pfn_notify)
+    const cl_device_id* devices,
+    void (CL_CALLBACK* pfn_notify)
     (
         const char* errinfo,
         const void* private_info,
@@ -132,5 +133,201 @@ cl_int clGetContextInfo
 )
 sets param_value to the queried param_name data
 returns status code
+
+
+cl_int clGetEventInfo(
+    cl_event event,
+    cl_event_info param_name,
+    0,
+    NULL,
+    size_t* param_value_size_ret
+)
+sets param_value_size_ret to the size of param_name's response
+this is unnecessary if the queried parameter is a fixed size (such as CL_EVENT_COMMAND_EXECUTION_STATUS)
+returns status code
+
+cl_int clGetEventInfo(
+    cl_event event,
+    cl_event_info param_name,
+    size_t param_value_size,
+    void* param_value,
+    NULL
+)
+sets param_value to the queried param_name data
+returns status code
+
+
+cl_int clWaitForEvents(
+    cl_uint num_events,
+    const cl_event* event_list
+)
+waits until the events in the event_list are done
+returns status code
+
+
+cl_program clCreateProgramWithSource(
+    cl_context context,
+    cl_uint count, //Number of lines in the program
+    const char** strings, //Lines of the program
+    const size_t* lengths, //Line lengths of the program.
+        // 0 in the array will use null-terminated for that line
+        // NULL will use null-terminated for all lines
+    cl_int* errcode_ret
+)
+returns a program object containing the source code
+
+
+cl_int clBuildProgram(
+    cl_program program,
+    cl_uint num_devices,
+    const cl_device_id* device_list,
+    const char* options,
+    void (CL_CALLBACK* pfn_notify)(cl_program program, void* user_data),
+    void* user_data
+)
+Compiles the program for the devices in device_list
+The callback function pfn_notify will be called whenever the program's state changes
+returns a status code
+
+
+cl_kernel clCreateKernel(
+    cl_program program,
+    const char* kernel_name,
+    cl_int* errcode_ret
+)
+returns a kernel object, the runnable program.
+
+
+cl_int clGetProgramInfo(
+    cl_program program,
+    cl_program_info param_name,
+    0,
+    NULL,
+    size_t* param_value_size_ret
+)
+sets param_value_size_ret to the size of param_name's response
+this is unnecessary if the queried parameter is a fixed size (such as CL_PROGRAM_NUM_DEVICES)
+returns status code
+
+cl_int clGetProgramInfo(
+    cl_program program,
+    cl_program_info param_name,
+    size_t param_value_size,
+    void* param_value,
+    NULL
+)
+sets param_value to the queried param_name data
+returns status code
+
+
+cl_program clCreateProgramWithBinary(
+    cl_context context,
+    cl_uint num_devices, //How many devices the program will need to run on
+    const cl_device_id* device_list, //The list of devices which the program will need to run on
+    const size_t* lengths, //An array of the size of each binary in bytes
+    const unsigned char** binaries, //An array of binary strings
+    cl_int* binary_status, //A status code per device
+    cl_int* errcode_ret
+)
+returns a program object containing the binaries
+
+
+cl_int clSetKernelArg(
+    cl_kernel kernel,
+    cl_uint arg_index,
+    size_t arg_size, //Always necessary, unlike some of the get info functions mentioned above.
+    const void* arg_value
+)
+returns a status code
+
+
+cl_int clEnqueueNDRangeKernel(
+    cl_command_queue command_queue, //Specifies the target device
+    cl_kernel kernel, //The code to be executed
+    cl_uint work_dim, //number of dimensions for work items (limited to 1, 2, or 3)
+    const size_t* global_work_offset, //offset so that work item IDs don't start at 0
+    const size_t* local_work_size, //num of work items per dimension
+    cl_uint num_events_in_wait_List, //number of items in the wait list
+    const cl_event* event_wait_list, //prereq items before this event can run
+    cl_event* event //current status of the kernel
+)
+returns a status code
+
+
+cl_int clWaitForEvents(
+    cl_uint num_events,
+    const cl_event* event_list
+)
+waits for all events in event_list to complete
+returns a status code
+
+
+cl_int clFinish(
+    cl_command_queue command_queue
+)
+waits for all events in a command queue to finish
+returns a status code
+
+
+cl_mem clCreateBuffer(
+    cl_context context, //visible for all devices associated with the context
+    cl_mem_flags flags, //read-only, write-only, or read-write, etc
+    size_t size, //size of the buffer
+    void* host_ptr, //optional based on the flag; allows allocating, copying, or directly using host memory
+    cl_int* errcode_ret //error response
+)
+returns the requested buffer memory object
+
+
+cl_mem clCreateImage(
+    cl_context context, //visible for all devices associated with the context
+    cl_mem_flags flags, //read-only, write-only, or read-write, etc
+    const cl_image_format* image_format, //How the image is stored in memory
+    const cl_image_desc* image_desc, //Metadata such as type, size, etc
+    void* host_ptr, //optional based on the flag; allows allocating, copying, or directly using host memory
+    cl_int* errcode_ret //error response
+)
+returns the requested image memory object
+
+
+cl_mem clCreatePipe(
+    cl_context context, //visible for all devices associated with the context
+    cl_mem_flags flags, //read-only, write-only, or read-write, etc
+    cl_uint pipe_packet_size, //size of a packet, or a single item in the queue
+    cl_uint max_packets, //max number of packets, or the max size of the queue
+    const cl_pipe_properties* properties, //Does nothing, reserved for future use/extensibility. Pass NULL
+    cl_int* errcode_ret //error response
+)
+returns the requested pipe memory object
+
+
+cl_int clEnqueueReadBuffer(
+    cl_command_queue command_queue,
+    cl_mem buffer, //The buffer to read from
+    cl_bool blocking_read,
+    size_t offset,
+    size_t size,
+    void* ptr, //Location of the host data to read into
+    cl_uint num_events_in_wait_list,
+    const cl_event* event_wait_list,
+    cl_event* event
+)
+returns a status code
+
+
+cl_int clEnqueueWriteBuffer(
+    cl_command_queue command_queue,
+    cl_mem buffer, //The buffer to write to
+    cl_bool blocking_write,
+    size_t offset,
+    size_t size,
+    const void* ptr, //Location of the host data to write from
+    cl_uint num_events_in_wait_list,
+    const cl_event* event_wait_list,
+    cl_event* event
+)
+returns a status code
+
+
 
 

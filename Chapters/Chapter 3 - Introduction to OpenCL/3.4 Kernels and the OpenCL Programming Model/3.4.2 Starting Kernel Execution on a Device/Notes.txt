@@ -16,4 +16,4 @@ clEnqueueNDRangeKernel()
 
 See section 3.3.3 for more details on events and the wait list
 
-clWaitForEvents() or clFinish can be used to make the host wait for kernels to complete.
+clWaitForEvents() or clFinish() can be used to make the host wait for kernels to complete.
